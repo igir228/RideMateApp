@@ -14,6 +14,7 @@ import org.json.JSONObject
 import java.io.File
 import java.net.URL
 
+
 object UpdateManager {
 
     private const val GITHUB_API = "https://api.github.com/repos/igir228/RideMateApp/releases/latest"
