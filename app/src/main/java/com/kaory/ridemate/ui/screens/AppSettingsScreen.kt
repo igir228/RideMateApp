@@ -8,11 +8,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.kaory.ridemate.data.update.UpdateManager
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppSettingsScreen(navController: NavController) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     var updateState by remember { mutableStateOf<UpdateManager.UpdateResult>(UpdateManager.UpdateResult.None) }
 
     LaunchedEffect(Unit) {
@@ -38,8 +40,9 @@ fun AppSettingsScreen(navController: NavController) {
                 Text("About This App")
             }
             Button(onClick = {
-                updateState = UpdateManager.UpdateResult.None
-                updateState = UpdateManager.checkForUpdate(context)
+                scope.launch {
+                    updateState = UpdateManager.checkForUpdate(context)
+                }
             }) {
                 Text("Check for Updates")
             }

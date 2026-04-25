@@ -15,14 +15,25 @@ android {
         minSdk = 26
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.2"
+    }
+
+    signingConfigs {
+        // Явно регистрируем конфигурацию с тем же именем, что и debug
+        maybeCreate("debug")
     }
 
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("debug")   // безопасно получаем нашу конфигурацию
             isMinifyEnabled = false
         }
     }
+    buildFeatures {
+        compose = true
+        buildConfig = true   // добавить эту строку
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
